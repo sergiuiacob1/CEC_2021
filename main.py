@@ -1,5 +1,9 @@
-from functions import Functions
+import os
 import logging
+import json
+from datetime import datetime
+
+from functions import Functions
 from hc import solve_with_HC
 from lshade import solve_with_LSHADE
 
@@ -10,11 +14,11 @@ common_output = {
 }
 
 
-def check_method_output(method, output):
+def _check_method_output(method, output):
     """Checks that a method outputs every information we need"""
     for key in common_output.keys():
         val_in_output = output.get(key)
-        if not val_in_output:
+        if val_in_output is None:
             logging.warning(
                 f"Method {method} did not add information about {key}")
 
@@ -23,10 +27,34 @@ def _get_f_name(common_params):
     return common_params['function'].__name__
 
 
+def _save_method_output(method_name, input_params, method_output):
+    """Saves the result (`method_output`) for running `method_name` with parameters `input_params`."""
+    now = datetime.now()
+    dt_string = now.strftime("%d_%m_%Y_%H_%M_%S")
+
+    # remove some stuff we don't wanna print
+    input_params = input_params.copy()
+    input_params.pop('bounds')
+    input_params['function'] = _get_f_name(input_params)
+
+    output = {
+        **input_params,
+        **method_output
+    }
+
+    os.makedirs('./output', exist_ok=True)
+    file_path = f'./output/{method_name}_{dt_string}.json'
+    with open(file_path, 'w+') as f:
+        json.dump(output, f)
+
+
 def main():
+    ndim = 20
     common_params = {
-        "function": Functions.rastrigin,
-        "ndim": 5
+        "function": Functions.bent_cigar,
+        "ndim": ndim,
+        # range for each parameter of the function
+        "bounds": [[-100, 100] for _ in range(ndim)],
     }
 
     HC_params = common_params.copy()
@@ -38,13 +66,15 @@ def main():
     })
 
     output_HC = solve_with_HC(HC_params)
-    output_LSHADE = solve_with_LSHADE(LSHADE_params)
+    _check_method_output("HC", output_HC)
+    _save_method_output("HC", common_params, output_HC)
 
-    check_method_output("HC", output_HC)
-    check_method_output("LSHADE", output_LSHADE)
+    # output_LSHADE = solve_with_LSHADE(LSHADE_params)
+    # _check_method_output("LSHADE", output_LSHADE)
+    # _save_method_output("LSHADE", common_params, output_LSHADE)
 
-    print(f"HC vs LSHADE for {_get_f_name(common_params)}:",
-          output_HC['f_value'], output_LSHADE['f_value'])
+    # print(f"HC vs LSHADE for {_get_f_name(common_params)}:",
+    #       output_HC['f_value'], output_LSHADE['f_value'])
 
 
 if __name__ == "__main__":
