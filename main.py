@@ -58,7 +58,7 @@ def _save_method_output(method_name, input_params, method_output):
 def main():
     ndim = 20
     common_params = {
-        "function": [Functions.bent_cigar],
+        "function": [Functions.bent_cigar, Functions.bentCigarRange],
         "ndim": ndim,
         # range for each parameter of the function
         "bounds": [[-100, 100] for _ in range(ndim)],
@@ -73,15 +73,16 @@ def main():
     })
 
     output_HC = solve_with_GA(GA_params)
+    print(output_HC)
     _check_method_output("HC", output_HC)
-    _save_method_output("HC", common_params, output_HC)
+    #_save_method_output("HC", common_params, output_HC)
 
-    output_LSHADE = solve_with_LSHADE(LSHADE_params)
-    _check_method_output("LSHADE", output_LSHADE)
-    _save_method_output("LSHADE", common_params, output_LSHADE)
+    #output_LSHADE = solve_with_LSHADE(LSHADE_params)
+    #_check_method_output("LSHADE", output_LSHADE)
+    #_save_method_output("LSHADE", common_params, output_LSHADE)
 
-    print(f"HC vs LSHADE for {_get_f_name(common_params)}:",
-          output_HC['f_value'], output_LSHADE['f_value'])
+    #print(f"HC vs LSHADE for {_get_f_name(common_params)}:",
+    #      output_HC['f_value'], output_LSHADE['f_value'])
 
 
 if __name__ == "__main__":

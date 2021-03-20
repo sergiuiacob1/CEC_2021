@@ -6,6 +6,8 @@ from math import sin
 class Functions:
     zeroDimRange = [-1, 1]
 
+    bentCigarRange = [-100,100]
+
     @staticmethod
     def bent_cigar(values):
         return values[0]**2+10**6*np.sum(np.array(values[1:])**2)

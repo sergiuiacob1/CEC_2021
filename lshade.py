@@ -1,7 +1,7 @@
 # We import the algorithm (You can use from pyade import * to import all of them)
 import pyade.lshade
-import numpy as np
 import math
+import numpy as np
 
 
 def callback(population_size, individual_size, bounds, func, opts, memory_size, callback, max_evals, seed, population,
