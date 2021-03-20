@@ -1,10 +1,15 @@
 import numpy as np
 import math
+from math import sin
 
 
 class Functions:
     zeroDimRange = [-1, 1]
 
+    @staticmethod
+    def bent_cigar(values):
+        return values[0]**2+10**6*np.sum(np.array(values[1:])**2)
+    
     @staticmethod
     def zero(values):
         '''Function: zero'''
@@ -173,7 +178,7 @@ class Functions:
 
     # Michalewicz function
     michalewiczDimRange = [0, math.pi]
-
+    @staticmethod
     def michalewicz(values):
         '''Function: Michalewicz'''
         m = 10

@@ -21,6 +21,7 @@ def solve_with_LSHADE(input_params):
     lshade_params['bounds'] = np.array(input_params['bounds'])
     lshade_params['func'] = input_params['function']
     lshade_params['callback'] = callback
+    lshade_params['max_evals'] = 100
 
     solution, fitness = algorithm.apply(**lshade_params)
     print(f'Solution: {solution}, fitness: {fitness}')
