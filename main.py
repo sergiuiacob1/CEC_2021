@@ -1,6 +1,6 @@
 from functions import Functions
 import logging
-from hc_ga import Algorithm, AlgorithmBihc, AlgorithmGa, AlgorithmGaBihc, solve_with_HC
+from hc_ga import Algorithm, AlgorithmBihc, AlgorithmGa, AlgorithmGaBihc, solve_with_GA
 from lshade import solve_with_LSHADE
 
 # structure for method output
@@ -25,25 +25,25 @@ def _get_f_name(common_params):
 
 def main():
     common_params = {
-        "function": Functions.rastrigin,
+        "function": [Functions.bent_cigar],
         "ndim": 5
     }
 
-    HC_params = common_params.copy()
-    LSHADE_params = common_params.copy()
-
-    HC_params.update({
+    GA_params = common_params.copy()
+    GA_params.update({
     })
+
+    LSHADE_params = common_params.copy()
     LSHADE_params.update({
     })
 
-    output_HC = solve_with_HC(HC_params)
+    output_GA = solve_with_GA(GA_params)
     output_LSHADE = solve_with_LSHADE(LSHADE_params)
 
-    check_method_output("HC", output_HC)
+    check_method_output("GA", output_GA)
     check_method_output("LSHADE", output_LSHADE)
 
-    print(f"HC vs LSHADE for {_get_f_name(common_params)}:",output_HC['f_value'], output_LSHADE['f_value'])
+    print(f"GA vs LSHADE for {_get_f_name(common_params)}:",output_GA['f_value'], output_LSHADE['f_value'])
 
 
 if __name__ == "__main__":

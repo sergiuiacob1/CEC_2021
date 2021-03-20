@@ -398,5 +398,7 @@ class AlgorithmGaBihc(AlgorithmGa):
         self.bootstrapIdx += 1
         return(True)
 
-def solve_with_HC(params):
-    return {'f_value': None}
+def solve_with_GA(params):
+    algorithm = AlgorithmGaBihc(params['function'])
+    explored_points = algorithm.run()
+    return {'f_value': explored_points}
