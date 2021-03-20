@@ -1,6 +1,6 @@
 from functions import Functions
 import logging
-from hc import solve_with_HC
+from hc_ga import Algorithm, AlgorithmBihc, AlgorithmGa, AlgorithmGaBihc, solve_with_HC
 from lshade import solve_with_LSHADE
 
 # structure for method output
@@ -43,8 +43,7 @@ def main():
     check_method_output("HC", output_HC)
     check_method_output("LSHADE", output_LSHADE)
 
-    print(f"HC vs LSHADE for {_get_f_name(common_params)}:",
-          output_HC['f_value'], output_LSHADE['f_value'])
+    print(f"HC vs LSHADE for {_get_f_name(common_params)}:",output_HC['f_value'], output_LSHADE['f_value'])
 
 
 if __name__ == "__main__":
