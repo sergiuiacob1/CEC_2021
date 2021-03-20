@@ -5,9 +5,10 @@ import random, time
 
 
 class Algorithm:
-    def __init__(self, func, optimumIsMinimum = True, precision = 5, dimensions = 2, steps = 1, doForever = 0, repeats = 1):
+    def __init__(self, func, maxFes, optimumIsMinimum = True, precision = 5, dimensions = 2, steps = 1, doForever = 0, repeats = 1):
         self.func = func[0]
         self.dimRange = func[1]
+        self.maxFes = maxFes
         self.dimIntervalLength = self.dimRange[1] - self.dimRange[0]
         self.optimumIsMinimum = optimumIsMinimum
         if optimumIsMinimum:
@@ -96,6 +97,9 @@ class Algorithm:
         return(v)
 
     def eval(self, values):
+        if self.evals==self.maxFes:
+            raise Exception("Too many evals. I'm done!")
+        print(self.evals)
         self.evals += 1
         e = self.func(values)
         self.exploredPoints.append([e, *values])
@@ -113,6 +117,7 @@ class Algorithm:
         self.repCurr = 0
 
     def solveStep(self):
+        print(self.evals)
         if self.repCurr >= self.repeats:
             if self.doForever:
                 self.restart()
@@ -136,8 +141,8 @@ class Algorithm:
         return(self.exploredPoints)
 
 class AlgorithmBihc(Algorithm):
-    def __init__(self, func, optimumIsMinimum = True, precision = 5, dimensions = 2, steps = 1, repeats = 10000, doForever = 0):
-        super().__init__(func, optimumIsMinimum, precision, dimensions, steps, doForever)
+    def __init__(self, func, maxFes, optimumIsMinimum = True, precision = 5, dimensions = 2, steps = 1, repeats = 10000, doForever = 0):
+        super().__init__(func, maxFes, optimumIsMinimum, precision, dimensions, steps, doForever)
         self.repeats = repeats
         self.ce = 0 #current eval
         self.cv = [] #current values
@@ -199,8 +204,8 @@ class AlgorithmBihc(Algorithm):
             self.candidate = None
 
 class AlgorithmGa(AlgorithmBihc):
-    def __init__(self, func, optimumIsMinimum = True, precision = 5, dimensions = 2, steps = 1, popSize = 100, genNo = 1000, genGrace = 200, pm = 0.01, pcx = 0.2, selPressure = 1, doForever = 0):
-        super().__init__(func, optimumIsMinimum, precision, dimensions, steps, 0, doForever)
+    def __init__(self, func, maxFes, optimumIsMinimum = True, precision = 5, dimensions = 2, steps = 1, popSize = 100, genNo = 1000, genGrace = 200, pm = 0.01, pcx = 0.2, selPressure = 1, doForever = 0):
+        super().__init__(func, maxFes, optimumIsMinimum, precision, dimensions, steps, 0, doForever)
         self.popSize = popSize
         self.genNo = genNo
         self.repeats = self.genNo
@@ -399,6 +404,9 @@ class AlgorithmGaBihc(AlgorithmGa):
         return(True)
 
 def solve_with_GA(params):
-    algorithm = AlgorithmGaBihc(params['function'])
-    explored_points = algorithm.run()
-    return {'f_value': explored_points}
+    algorithm = AlgorithmGaBihc([params['function'],params['bounds'][0]],params['maxFes'],dimensions=params['dimensions'],steps=100)
+    try:
+        _explored_points = algorithm.run()
+    except Exception as e:
+        pass    
+    return {'f_value': algorithm.be, 'solution': algorithm.bv}

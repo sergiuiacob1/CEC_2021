@@ -63,11 +63,10 @@ def main():
     }
     common_params = {
         "function": Functions.bent_cigar,
-        "range": Functions.bentCigarRange,
-        "maxfes": maxfes.get(str(ndim), 10000),
+        "maxFes": maxfes.get(str(ndim), 10000),
         "ndim": ndim,
-        # range for each parameter of the function
         "bounds": [[-100, 100] for _ in range(ndim)],
+        "dimensions": 10
     }
 
     GA_params = common_params.copy()
@@ -79,6 +78,7 @@ def main():
     })
 
     output_HC = solve_with_GA(GA_params)
+    
     print(output_HC)
     _check_method_output("HC", output_HC)
     #_save_method_output("HC", common_params, output_HC)
