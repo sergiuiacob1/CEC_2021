@@ -1,2 +1,2 @@
 numpy==1.17.3
-pyade==0.0.2
+pyade-python==1.1

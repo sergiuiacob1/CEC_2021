@@ -56,9 +56,14 @@ def _save_method_output(method_name, input_params, method_output):
 
 
 def main():
-    ndim = 20
+    ndim = 10
+    maxfes = {
+        "10": 200000,
+        "20": 1000000
+    }
     common_params = {
         "function": Functions.bent_cigar,
+        "maxfes": maxfes.get(str(ndim), 10000),
         "ndim": ndim,
         # range for each parameter of the function
         "bounds": [[-100, 100] for _ in range(ndim)],
