@@ -39,7 +39,7 @@ def _save_method_output(method_name, input_params, method_output):
     input_params.pop('bounds')
     input_params['function'] = _get_f_name(input_params)
     if 'solution' in method_output:
-        method_output['solution'] = np.array2string(method_output['solution'])
+        method_output['solution'] = list(method_output['solution'])
 
     output = {
         **input_params,
@@ -67,6 +67,7 @@ def main():
         "ndim": ndim,
         # range for each parameter of the function
         "bounds": [[-100, 100] for _ in range(ndim)],
+        'population_size': 150
     }
 
     HC_params = common_params.copy()
@@ -75,6 +76,7 @@ def main():
     HC_params.update({
     })
     LSHADE_params.update({
+        'memory_size': 5
     })
 
     output_HC = solve_with_HC(HC_params)
