@@ -27,7 +27,7 @@ def solve_with_LSHADE(input_params):
     lshade_params['bounds'] = np.array(input_params['bounds'])
     lshade_params['func'] = input_params['function']
     lshade_params['callback'] = callback
-    lshade_params['max_evals'] = input_params['maxfes']
+    lshade_params['max_evals'] = input_params['maxFes']
     lshade_params['population_size'] = input_params['population_size']
     lshade_params['memory_size'] = input_params['memory_size']
 
