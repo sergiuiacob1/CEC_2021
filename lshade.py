@@ -2,6 +2,7 @@
 from pyade import lshade
 import numpy as np
 import math
+import numpy as np
 
 fitnesses = []
 

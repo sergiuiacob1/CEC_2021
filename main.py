@@ -1,11 +1,11 @@
 import os
 import logging
+from hc_ga import Algorithm, AlgorithmBihc, AlgorithmGa, AlgorithmGaBihc, solve_with_GA
 import json
 import numpy as np
 from datetime import datetime
 
 from functions import Functions
-from hc_ga import Algorithm, AlgorithmBihc, AlgorithmGa, AlgorithmGaBihc, solve_with_HC
 from lshade import solve_with_LSHADE
 
 # structure for method output
@@ -63,32 +63,33 @@ def main():
     }
     common_params = {
         "function": Functions.bent_cigar,
-        "maxfes": maxfes.get(str(ndim), 10000),
+        "maxFes": maxfes.get(str(ndim), 10000),
         "ndim": ndim,
-        # range for each parameter of the function
         "bounds": [[-100, 100] for _ in range(ndim)],
         'population_size': 150
     }
 
-    HC_params = common_params.copy()
-    LSHADE_params = common_params.copy()
-
-    HC_params.update({
+    GA_params = common_params.copy()
+    GA_params.update({
     })
+
+    LSHADE_params = common_params.copy()
     LSHADE_params.update({
         'memory_size': 5
     })
 
-    output_HC = solve_with_HC(HC_params)
+    output_HC = solve_with_GA(GA_params)
+    
+    print(output_HC)
     _check_method_output("HC", output_HC)
-    _save_method_output("HC", common_params, output_HC)
+    #_save_method_output("HC", common_params, output_HC)
 
-    output_LSHADE = solve_with_LSHADE(LSHADE_params)
-    _check_method_output("LSHADE", output_LSHADE)
-    _save_method_output("LSHADE", common_params, output_LSHADE)
+    #output_LSHADE = solve_with_LSHADE(LSHADE_params)
+    #_check_method_output("LSHADE", output_LSHADE)
+    #_save_method_output("LSHADE", common_params, output_LSHADE)
 
-    print(f"HC vs LSHADE for {_get_f_name(common_params)}:",
-          output_HC['f_value'], output_LSHADE['f_value'])
+    #print(f"HC vs LSHADE for {_get_f_name(common_params)}:",
+    #      output_HC['f_value'], output_LSHADE['f_value'])
 
 
 if __name__ == "__main__":

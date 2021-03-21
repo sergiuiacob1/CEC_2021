@@ -4,6 +4,8 @@ from math import sin
 
 
 class Functions:
+    bentCigarRange = [-100, 100]
+
     @staticmethod
     def bent_cigar(values):
         return values[0]**2+10**6*np.sum(np.array(values[1:])**2)
@@ -26,6 +28,7 @@ class Functions:
         return np.sum(np.power(values, 2) - 10 * np.cos(2 * math.pi * values)) + 10 * len(values)
 
     high_conditioned_elliptic_dim_range = [-100, 100]
+
     @staticmethod
     def high_conditioned_elliptic(values):
         '''Function: High Conditioned Elliptic function'''
