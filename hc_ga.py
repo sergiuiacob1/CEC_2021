@@ -404,7 +404,7 @@ class AlgorithmGaBihc(AlgorithmGa):
         return(True)
 
 def solve_with_GA(params):
-    algorithm = AlgorithmGaBihc([params['function'],params['bounds'][0]],params['maxFes'],dimensions=params['dimensions'],steps=100)
+    algorithm = AlgorithmGaBihc([params['function'],params['bounds'][0]],params['maxFes'],dimensions=params['ndim'],steps=100)
     try:
         _explored_points = algorithm.run()
     except Exception as e:

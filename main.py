@@ -39,7 +39,7 @@ def _save_method_output(method_name, input_params, method_output):
     input_params.pop('bounds')
     input_params['function'] = _get_f_name(input_params)
     if 'solution' in method_output:
-        method_output['solution'] = np.array2string(method_output['solution'])
+        method_output['solution'] = list(method_output['solution'])
 
     output = {
         **input_params,
@@ -66,7 +66,7 @@ def main():
         "maxFes": maxfes.get(str(ndim), 10000),
         "ndim": ndim,
         "bounds": [[-100, 100] for _ in range(ndim)],
-        "dimensions": 10
+        'population_size': 150
     }
 
     GA_params = common_params.copy()
@@ -75,17 +75,17 @@ def main():
 
     LSHADE_params = common_params.copy()
     LSHADE_params.update({
+        'memory_size': 5
     })
 
-    output_HC = solve_with_GA(GA_params)
-    
-    print(output_HC)
-    _check_method_output("HC", output_HC)
-    #_save_method_output("HC", common_params, output_HC)
+    # output_HC = solve_with_GA(GA_params)
+    # print(output_HC)
+    # _check_method_output("HC", output_HC)
+    # _save_method_output("HC", common_params, output_HC)
 
-    #output_LSHADE = solve_with_LSHADE(LSHADE_params)
-    #_check_method_output("LSHADE", output_LSHADE)
-    #_save_method_output("LSHADE", common_params, output_LSHADE)
+    output_LSHADE = solve_with_LSHADE(LSHADE_params)
+    _check_method_output("LSHADE", output_LSHADE)
+    _save_method_output("LSHADE", common_params, output_LSHADE)
 
     #print(f"HC vs LSHADE for {_get_f_name(common_params)}:",
     #      output_HC['f_value'], output_LSHADE['f_value'])

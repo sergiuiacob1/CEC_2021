@@ -4,30 +4,13 @@ from math import sin
 
 
 class Functions:
-    zeroDimRange = [-1, 1]
-
-    bentCigarRange = [-100,100]
+    bentCigarRange = [-100, 100]
 
     @staticmethod
     def bent_cigar(values):
         return values[0]**2+10**6*np.sum(np.array(values[1:])**2)
-    
-    @staticmethod
-    def zero(values):
-        '''Function: zero'''
-        return(0)
 
-    diffDimRange = [-1, 1]
-
-    @staticmethod
-    def diff(values):
-        '''Function: difference'''
-        d = values[0]
-        for ii in range(len(values) - 1):
-            d -= values[ii + 1]
-        return(d)
-
-    deJong1DimRange = [-5.12, 5.12]
+    deJong1DimRange = [-100, 100]
 
     @staticmethod
     def deJong1(values):
@@ -37,17 +20,22 @@ class Functions:
             s += v ** 2
         return(s)
 
-    rastriginDimRange = [-5.12, 5.12]
+    rastriginDimRange = [-100, 100]
 
     @staticmethod
     def rastrigin(values):
         '''Function: Rastrigin'''
-        l = len(values)
-        n = 1 + l
-        s = 10 * n
-        for v in values:
-            s += v ** 2 - 10 * math.cos(math.tau * v)
-        return(s)
+        return np.sum(np.power(values, 2) - 10 * np.cos(2 * math.pi * values)) + 10 * len(values)
+
+    high_conditioned_elliptic_dim_range = [-100, 100]
+
+    @staticmethod
+    def high_conditioned_elliptic(values):
+        '''Function: High Conditioned Elliptic function'''
+        constant = 10**6
+        indexes = np.arange(0, len(values))
+        indexes = indexes / (len(values) - 1)
+        return np.sum(constant ** (indexes) * np.array(values) ** 2)
 
     # axis-parallel hyper-ellipsoid
     apheDimRange = [-5.12, 5.12]
@@ -180,6 +168,7 @@ class Functions:
 
     # Michalewicz function
     michalewiczDimRange = [0, math.pi]
+
     @staticmethod
     def michalewicz(values):
         '''Function: Michalewicz'''
