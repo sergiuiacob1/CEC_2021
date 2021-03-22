@@ -1,6 +1,7 @@
 import os
 import logging
-from hc_ga import Algorithm, AlgorithmBihc, AlgorithmGa, AlgorithmGaBihc, solve_with_GA
+#from hc_ga import Algorithm, AlgorithmBihc, AlgorithmGa, AlgorithmGaBihc, solve_with_GA
+from hc_ga1 import solve_with_GA
 import json
 import numpy as np
 from datetime import datetime
@@ -56,7 +57,7 @@ def _save_method_output(method_name, input_params, method_output):
 
 
 def main():
-    ndim = 10
+    ndim = 20
     maxfes = {
         "10": 200000,
         "20": 1000000
@@ -78,14 +79,14 @@ def main():
         'memory_size': 5
     })
 
-    # output_HC = solve_with_GA(GA_params)
-    # print(output_HC)
-    # _check_method_output("HC", output_HC)
-    # _save_method_output("HC", common_params, output_HC)
+    output_HC = solve_with_GA(GA_params)
+    print(output_HC)
+    #_check_method_output("HC", output_HC)
+    #_save_method_output("HC", common_params, output_HC)
 
-    output_LSHADE = solve_with_LSHADE(LSHADE_params)
-    _check_method_output("LSHADE", output_LSHADE)
-    _save_method_output("LSHADE", common_params, output_LSHADE)
+    #output_LSHADE = solve_with_LSHADE(LSHADE_params)
+    #_check_method_output("LSHADE", output_LSHADE)
+    #_save_method_output("LSHADE", common_params, output_LSHADE)
 
     #print(f"HC vs LSHADE for {_get_f_name(common_params)}:",
     #      output_HC['f_value'], output_LSHADE['f_value'])

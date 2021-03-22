@@ -13,8 +13,8 @@ def solve_with_GA(params):
     # except Exception as _:
     #     pass    
     # return {'f_value': algorithm.be, 'solution': algorithm.bv}
-    alg = ga(function=params['function'],dimension=10,variable_type='real',variable_boundaries=np.array(params['bounds']),algorithm_parameters={
-                                       'max_num_iteration': 2500,\
+    alg = ga(function=params['function'],dimension=params['ndim'],variable_type='real',variable_boundaries=np.array(params['bounds']),algorithm_parameters={
+                                       'max_num_iteration': 100000,\
                                        'population_size':100,\
                                        'mutation_probability':0.1,\
                                        'elit_ratio': 0.01,\
