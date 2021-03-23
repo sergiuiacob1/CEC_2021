@@ -6,8 +6,13 @@ from math import sin
 class Functions:
     bentCigarRange = [-100, 100]
 
+    evals = 0
+
     @staticmethod
     def bent_cigar(values):
+        if Functions.evals%10000==0:
+            print(Functions.evals)
+        Functions.evals+=1
         return values[0]**2+10**6*np.sum(np.array(values[1:])**2)
 
     deJong1DimRange = [-100, 100]
@@ -35,6 +40,9 @@ class Functions:
         constant = 10**6
         indexes = np.arange(0, len(values))
         indexes = indexes / (len(values) - 1)
+        if Functions.evals%10000==0:
+            print(Functions.evals)
+        Functions.evals+=1
         return np.sum(constant ** (indexes) * np.array(values) ** 2)
 
     # axis-parallel hyper-ellipsoid
@@ -110,6 +118,9 @@ class Functions:
             p *= math.cos(v / math.sqrt(1 + ii))
         s /= 4000
         s = s - p + 1
+        if Functions.evals%10000==0:
+            print(Functions.evals)
+        Functions.evals+=1
         return(s)
 
     # Sum of different powers

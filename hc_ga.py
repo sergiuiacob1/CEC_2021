@@ -99,7 +99,6 @@ class Algorithm:
     def eval(self, values):
         if self.evals==self.maxFes:
             raise Exception("Too many evals. I'm done!")
-        print(self.evals)
         self.evals += 1
         e = self.func(values)
         self.exploredPoints.append([e, *values])
@@ -404,7 +403,7 @@ class AlgorithmGaBihc(AlgorithmGa):
         return(True)
 
 def solve_with_GA(params):
-    algorithm = AlgorithmGaBihc([params['function'],params['bounds'][0]],params['maxFes'],dimensions=params['ndim'],steps=100)
+    algorithm = AlgorithmGaBihc([params['function'],params['bounds'][0]],params['maxFes'],dimensions=params['ndim'],steps=100000)
     try:
         _explored_points = algorithm.run()
     except Exception as e:
