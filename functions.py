@@ -81,8 +81,7 @@ class Functions:
         '''Function: Rosenbrock'''
         s = 0
         for ii in range(len(values) - 1):
-            s += 100 * (values[ii + 1] - values[ii]
-                        ** 2)**2 + (1 - values[ii])**2
+            s += 100 * (values[ii]**2 - values[ii+1])**2 + (values[ii] - 1)**2
         return(s)
 
     # Schwefel's Function
